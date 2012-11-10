@@ -1,4 +1,14 @@
 BasecampClone::Application.routes.draw do
+
+  devise_for :users do
+    resources :projects do
+      resources :lists, only: [:new, :create, :edit, :update, :destroy] do
+        resources :tasks, only: [:new, :create, :edit, :update, :destroy]
+      end
+    end
+  end
+
+  root :to => 'projects#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

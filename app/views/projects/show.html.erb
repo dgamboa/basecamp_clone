@@ -1,0 +1,41 @@
+<h1><%= @project.name %></h1>
+<h3><%= @project.description %></h3>
+
+<div class='row'>
+
+  <table class='table table-striped'>
+    <tr>
+      <th>Member</th>
+      <th>Actions</th>
+    </tr>
+    <% @members.each do |member| %>
+    <tr>
+      <td><%= member.email %></td>
+      <td>remove member (tbd)</td>
+    </tr>
+    <% end %>
+  </table>
+  add member (tdb)
+</div>
+
+<div class='row'>
+  <ul>
+    <% @lists.each do |list| %>
+      <ul>
+        <%= list.title %>
+        <% list.tasks.each do |task| %>
+          <li><%= task.description %></li>
+          <li>doer stuff somehow</li>
+          <li><%= task.due_at %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </ul>
+
+<%= link_to 'Add list', new_project_list_path(@project.id) %>
+</div>
+<!-- stuff to list:
+      members
+      lists
+      tasks
+-->
