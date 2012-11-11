@@ -16,13 +16,20 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
+    @users = User.all
   end
 
   def create
     user = current_user
-    @project = Project.new(params[:project])
+    params = params[:project]
+    member_emails = params.delete(:members)[1..-1]
+    @project = Project.new(params)
     if @project.save
       Member.create!(project_id: @project.id, user_id: user.id, owner: true)
+      member_emails.each do |member|
+        user = User.find_by_email(member)
+        Member.create(project_id: @project.id, user_id: user.id, owner: false)
+      end
       flash[:notice] = "Good luck on your new project"
       redirect_to @project
     else
@@ -32,11 +39,19 @@ class ProjectsController < ApplicationController
 
   def edit
     @project = Project.find(params[:id])
+    @users = User.all
   end
 
   def update
+    user = current_user
+    project_params = params[:project]
+    member_emails = project_params.delete(:members)[1..-1]
     @project = Project.find(params[:id])
-    if @project.update_attributes(params[:project])
+    if @project.update_attributes(project_params)
+      member_emails.each do |member|
+        user = User.find_by_email(member)
+        Member.create(project_id: @project.id, user_id: user.id, owner: false)
+      end
       redirect_to @project
     else
       render :edit
@@ -46,6 +61,11 @@ class ProjectsController < ApplicationController
   def destroy
     Project.find(params[:id]).delete
     redirect_to projects_path
+  end
+
+  def destroy_member
+    Member.find_by_project_id_and_user_id(params[:project_id], params[:user_id]).destroy
+    redirect_to project_path(params[:project_id])
   end
 
   private

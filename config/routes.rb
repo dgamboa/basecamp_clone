@@ -8,6 +8,9 @@ BasecampClone::Application.routes.draw do
     end
   end
 
+  delete '/projects/:project_id/member/:user_id', as: 'destroy_member',
+    controller: 'projects', action: 'destroy_member'
+
   root :to => 'projects#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.

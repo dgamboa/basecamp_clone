@@ -1,36 +1,43 @@
-<h1><%= @project.name %></h1>
-<h3><%= @project.description %></h3>
+<h1><small>Name:</small> <%= @project.name %>
+    <small><font size=3><%= link_to 'edit', edit_project_path(@project) %></font></small></h1>
+<h4><small>Description: </small><%= @project.description %></h4>
 
 <div class='row'>
-
+<h3>Members</h3>
   <table class='table table-striped'>
     <tr>
-      <th>Member</th>
+      <th>Member   <small>(<%= link_to 'Add member', edit_project_path(@project) %>)</small></th>
       <th>Actions</th>
     </tr>
     <% @members.each do |member| %>
     <tr>
       <td><%= member.email %></td>
-      <td>remove member (tbd)</td>
+      <td><%= link_to 'Destroy', destroy_member_path(@project.id, member.id), method: :delete %></td>
     </tr>
     <% end %>
   </table>
-  add member (tdb)
 </div>
 
 <div class='row'>
-  <ul>
+<h3>Lists</h3>
     <% @lists.each do |list| %>
-      <ul>
-        <%= list.title %>
-        <% list.tasks.each do |task| %>
-          <li><%= task.description %></li>
-          <li>doer stuff somehow</li>
-          <li><%= task.due_at %></li>
-        <% end %>
-      </ul>
+        <b><%= list.title %></b>
+          <small>(<%= link_to 'Add task', new_project_list_task_path(@project.id, list.id) %>)</small>
+        <table class='table table-striped'>
+          <tr>
+            <th>Description</th>
+            <th>Assigned to</th>
+            <th>Due date</th>
+          </tr>
+          <% list.tasks.each do |task| %>
+          <tr>
+            <td><%= task.description %></td>
+            <td><%= User.find(task.doer_id).email %></td>
+            <td><%= task.due_at %></td>
+          </tr>
+          <% end %>
+        </table>
     <% end %>
-  </ul>
 
 <%= link_to 'Add list', new_project_list_path(@project.id) %>
 </div>

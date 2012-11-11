@@ -1,0 +1,17 @@
+<%= form_for([@project, @list, @task]) do |f| %>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label 'Assigned to' %><br />
+    <%= f.collection_select :doer_id, @doers.all, :id, :email %>
+  </div>
+  <div class="field">
+    <%= f.label :due_at %><br />
+    <%= f.date_select :due_at %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
