@@ -21,9 +21,8 @@ class ProjectsController < ApplicationController
 
   def create
     user = current_user
-    params = params[:project]
-    member_emails = params.delete(:members)[1..-1]
-    @project = Project.new(params)
+    member_emails = project_params.delete(:members)[1..-1]
+    @project = Project.new(project_params)
     if @project.save
       Member.create!(project_id: @project.id, user_id: user.id, owner: true)
       member_emails.each do |member|
@@ -82,5 +81,9 @@ class ProjectsController < ApplicationController
     unless member && member.owner
       redirect_to projects_path
     end
+  end
+
+  def project_params
+    params[:project]
   end
 end
