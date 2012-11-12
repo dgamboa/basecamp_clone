@@ -9,6 +9,10 @@ gem 'devise'
 group :development, :test do
   gem 'sqlite3'
   gem 'quiet_assets'
+  gem 'rspec-rails'
+  gem 'faker'
+  gem 'fakeweb'
+  gem 'factory_girl_rails'
 end
 
 
