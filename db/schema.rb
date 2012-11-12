@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121110064003) do
+ActiveRecord::Schema.define(:version => 20121112193133) do
 
   create_table "lists", :force => true do |t|
     t.integer  "project_id"
@@ -23,9 +23,8 @@ ActiveRecord::Schema.define(:version => 20121110064003) do
   create_table "members", :force => true do |t|
     t.integer  "project_id"
     t.integer  "user_id"
-    t.boolean  "owner",      :default => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "projects", :force => true do |t|
@@ -34,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20121110064003) do
     t.boolean  "private",     :default => false
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
+    t.integer  "owner_id"
   end
 
   create_table "tasks", :force => true do |t|

@@ -13,7 +13,7 @@
   </div><br>
   <div class='field'>
     <%= f.label 'Members' %>
-    <%= f.select :members, options_for_select(@users.map(&:email)), {}, {:multiple => true} %>
+    <%= f.text_area :member_emails %>
   </div>
   <div class="actions">
     <%= f.submit %>

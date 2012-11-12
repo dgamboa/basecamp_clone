@@ -10,4 +10,5 @@ class User < ActiveRecord::Base
 
   has_many :members
   has_many :projects, through: :members
+  has_many :owned_projects, :class_name => 'Project', :foreign_key => :owner_id
 end
